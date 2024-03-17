@@ -71,10 +71,10 @@ const QrCodeScanner = () => {
           imageData.height
         );
         if (qrCodeData) {
-          if (qrCodeData.data !== "http://localhost:3000/result") {
+          if (qrCodeData.data === "http://localhost:3000/result") {
+            console.log(qrCodeData.data);
             setError("Invalid QR Code");
             setTimeout(scanQrCode, 100);
-            console.log("Invalid QR Code!!!!");
             return;
           }
           setResult(qrCodeData.data);
