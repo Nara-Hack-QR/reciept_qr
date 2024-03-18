@@ -1,14 +1,19 @@
 'use client';
+import CameraFrame from "@/components/ui/CameraFrame";
 import HistoryButton from "@/components/ui/HistoryButton";
 import QrCodeScanner from "@/components/ui/QrCodeScanner";
-import ReadReceiptButton from "@/components/ui/ReadReceiptButton";
+import { useState } from "react";
 
 const Home = () => {
+  const [isStarted, setIsStarted] = useState(false);
+  const handleClickCamera = () => {
+    setIsStarted(true);
+  }
 
   return (
     <main className="flex flex-col items-center py-10 gap-5">
       <h1 className="text-[30px]">読み込み</h1>
-      <QrCodeScanner />
+      {isStarted ? (<QrCodeScanner />):(<CameraFrame handleClick={handleClickCamera}/>)}
       <HistoryButton />
     </main>
   );
