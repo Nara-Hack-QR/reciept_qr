@@ -16,19 +16,6 @@ function base64url_encode(buffer: ArrayBuffer): string {
     .replace(/=+$/, "");
 }
 
-function base64url_decode(value: string): ArrayBuffer {
-  const m = value.length % 4;
-  return Uint8Array.from(
-    atob(
-      value
-        .replace(/-/g, "+")
-        .replace(/_/g, "/")
-        .padEnd(value.length + (m === 0 ? 0 : 4 - m), "=")
-    ),
-    (c) => c.charCodeAt(0)
-  ).buffer;
-}
-
 const ReceiptView: FC<ReceiptViewProps> = ({ receipt, resetFunc }) => {
   const receiptJson = JSON.stringify(receipt);
   const utf8BytesReceipt = new TextEncoder().encode(receiptJson);
