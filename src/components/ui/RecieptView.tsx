@@ -10,6 +10,9 @@ type ReceiptViewProps = {
 const ReceiptView: FC<ReceiptViewProps> = ({ receipt, resetFunc }) => {
   const receiptJson = JSON.stringify(receipt);
   const receiptBase64Url = btoa(receiptJson);
+  //base64の末尾に"=="がついてしまうので、それを削除
+  const optimizedReceiptBase64Url =  receiptBase64Url.replace(/=+$/, "");
+  console.log(optimizedReceiptBase64Url);
   return (
     <article className="flex flex-col items-center">
       <h1>レシート</h1>
