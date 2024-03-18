@@ -28,13 +28,13 @@ const ReceiptView:FC<ReceiptViewProps> = ({
             {receipt.commodities.map((commodity) => (
                 <tr key={commodity.id}>
                 <td>{commodity.name}</td>
-                <td>{commodity.price}</td>
-                <td>{commodity.count}</td>
+                <td>{commodity.price}円</td>
+                <td>{commodity.count}点</td>
                 </tr>
             ))}
             </tbody>
         </table>
-        <p>Total Price: {receipt.totalPrice}</p>
+        <p>Total Price: {receipt.totalPrice}円</p>
         <Button variant={"outline"} onClick={resetFunc}>レシートを取り消す</Button>
     </article>
   )
