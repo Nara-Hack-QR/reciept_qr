@@ -11,7 +11,6 @@ const Home = () => {
   return (
     <main className="flex flex-col items-center py-10 gap-5">
       <h1 className="text-[30px]">読み込み</h1>
-      {/* <article className="w-[90%] h-[450px] bg-gray-500">Camera Field</article> */}
       <QrCodeScanner />
       <ReadReceiptButton handleClick={handleReadReceipt} />
       <HistoryButton />

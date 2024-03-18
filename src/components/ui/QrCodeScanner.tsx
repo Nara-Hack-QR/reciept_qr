@@ -1,18 +1,42 @@
 "use client";
 
 import jsQR from "jsqr";
-import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
+import ReceiptView from "./RecieptView";
 
+const demoReceipt: Receipt = {
+  date: "2021-10-10",
+  commodities: [
+    {
+      id: "1",
+      name: "apple",
+      price: 100,
+      count: 3,
+    },
+    {
+      id: "2",
+      name: "banana",
+      price: 50,
+      count: 5,
+    },
+  ],
+  publisherName: "hoge_hoge_store",
+  totalPrice: 550,
+  publisherAddress: "hoge_hoge_land",
+};
 
 const QrCodeScanner = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [result, setResult] = useState("");
+  const [result, setResult] = useState<Receipt|null>(null);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    console.log("useEffect")
+    startScanner();
+  }, []);
+
+  const startScanner = () => {
+    console.log("useEffect");
     const constants = {
       video: {
         facingMode: "environment",
@@ -32,10 +56,9 @@ const QrCodeScanner = () => {
           //play()がPromiseを返すためthen,catchで処理を行う
           if (playPromise !== undefined) {
             console.log("playPromise");
-            playPromise
-              .then((_) => {
-                scanQrCode();
-              })
+            playPromise.then((_) => {
+              scanQrCode();
+            });
           }
         }
       })
@@ -54,7 +77,7 @@ const QrCodeScanner = () => {
         }
       }
     };
-  }, []);
+  };
 
   const scanQrCode = () => {
     const canvas = canvasRef.current;
@@ -71,19 +94,26 @@ const QrCodeScanner = () => {
           imageData.height
         );
         if (qrCodeData) {
-          if (qrCodeData.data === "http://localhost:3000/result") {
+          //TODO validation
+          if (qrCodeData.data === "") {
             console.log(qrCodeData.data);
             setError("Invalid QR Code");
             setTimeout(scanQrCode, 100);
             return;
           }
-          setResult(qrCodeData.data);
-          console.log(qrCodeData.data);
+          const decodedData = JSON.parse(qrCodeData.data) as Receipt;
+          setResult(decodedData);
           return;
         }
         setTimeout(scanQrCode, 100);
       }
     }
+  };
+
+  const resetFunc = () => {
+    setResult(null);
+    setError("");
+    startScanner();
   };
 
   return (
@@ -110,9 +140,7 @@ const QrCodeScanner = () => {
       )}
       {result && (
         <div className="flex justify-center">
-          <Link href={result}>
-            <button type="button">push</button>
-          </Link>
+          <ReceiptView receipt={result} resetFunc={resetFunc} />
         </div>
       )}
       {error && <p className="text-center text-xs text-red-500">{error}</p>}
