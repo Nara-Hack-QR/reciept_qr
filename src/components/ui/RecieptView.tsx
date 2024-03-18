@@ -11,7 +11,7 @@ const ReceiptView:FC<ReceiptViewProps> = ({
     resetFunc
 }) => {
   return (
-    <article>
+    <article className='flex flex-col items-center'>
         <h1>レシート</h1>
         <p>日付: {receipt.date}</p>
         <p>販売店名: {receipt.publisherName}</p>
@@ -35,7 +35,7 @@ const ReceiptView:FC<ReceiptViewProps> = ({
             </tbody>
         </table>
         <p>Total Price: {receipt.totalPrice}円</p>
-        <Button variant={"outline"} onClick={resetFunc}>レシートを取り消す</Button>
+        <Button variant={"outline"} onClick={resetFunc}>戻る</Button>
     </article>
   )
 }
