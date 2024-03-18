@@ -1,9 +1,29 @@
 "use client";
 
 import jsQR from "jsqr";
-import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
+import ReceiptView from "./RecieptView";
 
+const demoReceipt:Receipt = {
+  date: "2021-10-10",
+  commodities: [
+    {
+      id: "1",
+      name: "apple",
+      price: 100,
+      count: 3
+    },
+    {
+      id: "2",
+      name: "banana",
+      price: 50,
+      count: 5
+    }
+  ],
+  publisherName: "hoge_hoge_store",
+  totalPrice: 550,
+  publisherAddress: "hoge_hoge_land"
+}
 
 const QrCodeScanner = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -86,6 +106,11 @@ const QrCodeScanner = () => {
     }
   };
 
+  const resetFunc = () => {
+    setResult("");
+    setError("");
+  }
+
   return (
     <div>
       {!result && (
@@ -110,9 +135,7 @@ const QrCodeScanner = () => {
       )}
       {result && (
         <div className="flex justify-center">
-          <Link href={result}>
-            <button type="button">push</button>
-          </Link>
+          <ReceiptView receipt={demoReceipt} resetFunc={resetFunc}/>
         </div>
       )}
       {error && <p className="text-center text-xs text-red-500">{error}</p>}
