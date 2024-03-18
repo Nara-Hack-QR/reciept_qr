@@ -28,7 +28,7 @@ const demoReceipt: Receipt = {
 const QrCodeScanner = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [result, setResult] = useState("");
+  const [result, setResult] = useState<Receipt|null>(null);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -94,14 +94,15 @@ const QrCodeScanner = () => {
           imageData.height
         );
         if (qrCodeData) {
-          if (qrCodeData.data === "http://localhost:3000/result") {
+          //TODO validation
+          if (qrCodeData.data === "") {
             console.log(qrCodeData.data);
             setError("Invalid QR Code");
             setTimeout(scanQrCode, 100);
             return;
           }
-          setResult(qrCodeData.data);
-          console.log(qrCodeData.data);
+          const decodedData = JSON.parse(qrCodeData.data) as Receipt;
+          setResult(decodedData);
           return;
         }
         setTimeout(scanQrCode, 100);
@@ -110,7 +111,7 @@ const QrCodeScanner = () => {
   };
 
   const resetFunc = () => {
-    setResult("");
+    setResult(null);
     setError("");
     startScanner();
   };
@@ -139,7 +140,7 @@ const QrCodeScanner = () => {
       )}
       {result && (
         <div className="flex justify-center">
-          <ReceiptView receipt={demoReceipt} resetFunc={resetFunc} />
+          <ReceiptView receipt={result} resetFunc={resetFunc} />
         </div>
       )}
       {error && <p className="text-center text-xs text-red-500">{error}</p>}
