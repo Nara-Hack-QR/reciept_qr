@@ -7,12 +7,32 @@ type ReceiptViewProps = {
   resetFunc: () => void;
 };
 
+function base64url_encode(buffer: ArrayBuffer): string {
+  return btoa(
+    Array.from(new Uint8Array(buffer), (b) => String.fromCharCode(b)).join("")
+  )
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_")
+    .replace(/=+$/, "");
+}
+
+function base64url_decode(value: string): ArrayBuffer {
+  const m = value.length % 4;
+  return Uint8Array.from(
+    atob(
+      value
+        .replace(/-/g, "+")
+        .replace(/_/g, "/")
+        .padEnd(value.length + (m === 0 ? 0 : 4 - m), "=")
+    ),
+    (c) => c.charCodeAt(0)
+  ).buffer;
+}
+
 const ReceiptView: FC<ReceiptViewProps> = ({ receipt, resetFunc }) => {
   const receiptJson = JSON.stringify(receipt);
-  const receiptBase64Url = btoa(receiptJson);
-  //base64の末尾に"=="がついてしまうので、それを削除
-  const optimizedReceiptBase64Url =  receiptBase64Url.replace(/=+$/, "");
-  console.log(optimizedReceiptBase64Url);
+  const utf8BytesReceipt = new TextEncoder().encode(receiptJson);
+  const base64UrlReceipt = base64url_encode(utf8BytesReceipt);
   return (
     <article className="flex flex-col items-center">
       <h1>レシート</h1>
@@ -41,7 +61,7 @@ const ReceiptView: FC<ReceiptViewProps> = ({ receipt, resetFunc }) => {
       <div className="bg-gray-400">
         <LineShareButton
           className="flex items-center gap-2"
-          url={`https://https://reciept-qr.vercel.app/famiily/${receiptBase64Url}`}
+          url={`https://https://reciept-qr.vercel.app/famiily/${base64UrlReceipt}`}
           title="HOGE"
         >
           <LineIcon size={24} round />
