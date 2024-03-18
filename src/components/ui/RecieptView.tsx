@@ -48,7 +48,7 @@ const ReceiptView: FC<ReceiptViewProps> = ({ receipt, resetFunc }) => {
       <div className="bg-gray-400">
         <LineShareButton
           className="flex items-center gap-2"
-          url={`https://https://reciept-qr.vercel.app/famiily/${base64UrlReceipt}`}
+          url={`https://reciept-qr.vercel.app/famiily/${base64UrlReceipt}`}
           title="HOGE"
         >
           <LineIcon size={24} round />
