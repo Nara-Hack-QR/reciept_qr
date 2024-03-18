@@ -40,8 +40,8 @@ const QrCodeScanner = () => {
     const constants = {
       video: {
         facingMode: "environment",
-        width: { ideal: 300 },
-        height: { ideal: 300 },
+        width: { ideal: 350 },
+        height: { ideal: 350 },
       },
     };
 
@@ -97,7 +97,7 @@ const QrCodeScanner = () => {
           //TODO validation
           if (qrCodeData.data === "") {
             console.log(qrCodeData.data);
-            setError("Invalid QR Code");
+            setError("QRコードに間違いがある可能性があります。");
             setTimeout(scanQrCode, 100);
             return;
           }
@@ -105,7 +105,7 @@ const QrCodeScanner = () => {
           setResult(decodedData);
           return;
         }
-        setTimeout(scanQrCode, 100);
+        setTimeout(scanQrCode, 10);
       }
     }
   };
@@ -117,22 +117,22 @@ const QrCodeScanner = () => {
   };
 
   return (
-    <div>
+    <div className="flex flex-col items-center gap-5">
       {!result && (
         <div className="flex justify-center">
-          <div className="relative h-[300px] w-[300px]">
+          <div className="relative h-[350px] w-[350px]">
             <video
               ref={videoRef}
               autoPlay
               playsInline
-              className="absolute left-0 top-0 -z-50 h-[300px] w-[300px]"
+              className="absolute left-0 top-0 -z-50 h-[350px] w-[350px]"
             >
               <track kind="captions" />
             </video>
             <canvas
               ref={canvasRef}
-              width="300"
-              height="300"
+              width="350"
+              height="350"
               className="absolute left-0 top-0"
             />
           </div>
@@ -143,6 +143,7 @@ const QrCodeScanner = () => {
           <ReceiptView receipt={result} resetFunc={resetFunc} />
         </div>
       )}
+      {!result && (<p className="text-center text-xl">QRコードを画面の中央に写してください</p>)}
       {error && <p className="text-center text-xs text-red-500">{error}</p>}
     </div>
   );
