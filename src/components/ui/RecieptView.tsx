@@ -7,19 +7,9 @@ type ReceiptViewProps = {
   resetFunc: () => void;
 };
 
-function base64url_encode(buffer: ArrayBuffer): string {
-  return btoa(
-    Array.from(new Uint8Array(buffer), (b) => String.fromCharCode(b)).join("")
-  )
-    .replace(/\+/g, "-")
-    .replace(/\//g, "_")
-    .replace(/=+$/, "");
-}
-
 const ReceiptView: FC<ReceiptViewProps> = ({ receipt, resetFunc }) => {
-  const receiptJson = JSON.stringify(receipt);
-  const utf8BytesReceipt = new TextEncoder().encode(receiptJson);
-  const base64UrlReceipt = base64url_encode(utf8BytesReceipt);
+  const json = JSON.stringify(receipt);
+  const base64url = btoa(json).replace(/\+/g, "-").replace(/\//g, "_").replace(/=/g, "");
   return (
     <article className="flex flex-col items-center">
       <h1>レシート</h1>
@@ -48,7 +38,7 @@ const ReceiptView: FC<ReceiptViewProps> = ({ receipt, resetFunc }) => {
       <div className="bg-gray-400">
         <LineShareButton
           className="flex items-center gap-2"
-          url={`https://reciept-qr.vercel.app/famiily/${base64UrlReceipt}`}
+          url={`https://reciept-qr.vercel.app/famiily/${base64url}`}
           title="HOGE"
         >
           <LineIcon size={24} round />
