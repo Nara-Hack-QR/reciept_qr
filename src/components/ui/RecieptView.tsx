@@ -8,11 +8,8 @@ type ReceiptViewProps = {
 };
 
 const ReceiptView: FC<ReceiptViewProps> = ({ receipt, resetFunc }) => {
-  const json = JSON.stringify(receipt);
-  const base64url = btoa(json)
-    .replace(/\+/g, "-")
-    .replace(/\//g, "_")
-    .replace(/=/g, "");
+  const json = encodeURIComponent(JSON.stringify(receipt));
+  const base64url = btoa(json).replace(/\+/g, "-").replace(/\//g, "_").replace(/=/g, "");
   return (
     <article className="flex flex-col items-center gap-5">
       <div className="border border-slate-400 py-3 w-[350px] flex flex-col items-center text-lg font-bold gap-5 h-[600px]">
@@ -43,7 +40,7 @@ const ReceiptView: FC<ReceiptViewProps> = ({ receipt, resetFunc }) => {
       <div className="bg-green-200 px-2 py-4 rounded-sm">
         <LineShareButton
           className="flex items-center gap-2"
-          url={`https://reciept-qr.vercel.app/family/${base64url}`}
+          url={`https://reciept-qr.vercel.app/family/(${base64url})`}
           title="HOGE"
         >
           <LineIcon size={24} round />
