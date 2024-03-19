@@ -12,7 +12,7 @@ const ReceiptView: FC<ReceiptViewProps> = ({ receipt, resetFunc }) => {
   const base64url = btoa(json).replace(/\+/g, "-").replace(/\//g, "_").replace(/=/g, "");
   return (
     <article className="flex flex-col items-center gap-5">
-      <div className="border border-slate-400 py-3 w-[350px] flex flex-col items-center text-lg font-bold gap-5 h-[600px]">
+      <div className="border border-slate-400 py-3 w-[350px] flex flex-col items-center text-lg font-bold gap-5 h-[500px]">
         <h1>レシート</h1>
         <p>日付: {receipt.date}</p>
         <p>販売店名: {receipt.publisherName}</p>
