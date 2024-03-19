@@ -12,9 +12,8 @@ const Home = () => {
 
   return (
     <main className="flex flex-col items-center py-10 gap-5">
-      <h1 className="text-[30px]">読み込み</h1>
+      <h1 className="text-[30px] font-bold">読み込み</h1>
       {isStarted ? (<QrCodeScanner />):(<CameraFrame handleClick={handleClickCamera}/>)}
-      <HistoryButton />
     </main>
   );
 };
