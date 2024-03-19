@@ -143,7 +143,7 @@ const QrCodeScanner = () => {
           <ReceiptView receipt={result} resetFunc={resetFunc} />
         </div>
       )}
-      {!result && (<p className="text-center text-xl">QRコードを画面の中央に写してください</p>)}
+      {!result && (<p className="text-center text-xl font-bold">QRコードを画面の中央に写してください</p>)}
       {error && <p className="text-center text-xs text-red-500">{error}</p>}
     </div>
   );
