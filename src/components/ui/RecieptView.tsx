@@ -8,7 +8,7 @@ type ReceiptViewProps = {
 };
 
 const ReceiptView: FC<ReceiptViewProps> = ({ receipt, resetFunc }) => {
-  const json = JSON.stringify(receipt);
+  const json = encodeURIComponent(JSON.stringify(receipt));
   const base64url = btoa(json).replace(/\+/g, "-").replace(/\//g, "_").replace(/=/g, "");
   return (
     <article className="flex flex-col items-center">

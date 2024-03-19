@@ -1,7 +1,7 @@
 import React from "react";
 
 const Family = ({ params }: { params: { slug: string } }) => {
-  const json = atob(params.slug).replace(/-/g, "+").replace(/_/g, "/");
+  const json = decodeURIComponent(atob(params.slug).replace(/-/g, "+").replace(/_/g, "/"));
   const receipt = JSON.parse(json) as Receipt;
   return <article className="flex flex-col items-center">
   <h1>レシート</h1>
