@@ -47,7 +47,6 @@ const ReceiptView: FC<ReceiptViewProps> = ({ receipt, resetFunc }) => {
           <p className="text-2xl">LINEで家族に送信する</p>
         </LineShareButton>
       </div>
-      <a href={`https://social-plugins.line.me/lineit/share?url=https://reciept-qr.vercel.app/family/(${base64url})&text=your_text`}>aaa</a>
       <Button variant={"outline"} onClick={resetFunc} className="font-bold text-xl">
         戻る
       </Button>
