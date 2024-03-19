@@ -1,7 +1,9 @@
 import React from "react";
 
 const Family = ({ params }: { params: { slug: string } }) => {
-  const json = decodeURIComponent(atob(params.slug).replace(/-/g, "+").replace(/_/g, "/"));
+  //paramsのはじめと終わりの括弧を取り除く
+  const newParams = params.slug.slice(1, -1);
+  const json = decodeURIComponent(atob(newParams).replace(/-/g, "+").replace(/_/g, "/"));
   const receipt = JSON.parse(json) as Receipt;
   return <article className="flex flex-col items-center">
   <h1>レシート</h1>
